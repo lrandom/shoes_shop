@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://thymeleaf.org"  xmlns:layout="http://https://ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{admin/layout}"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+   <div layout:fragment="content">
+       <div th:if="${failed!=null}" class="alert alert-danger alert-dismissible">
+           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+           <h5><i class="icon fas fa-ban"></i> Alert!</h5>
+           <div th:text="${failed}"></div>
+       </div>
+
+       <div th:if="${success!=null}" class="alert alert-success alert-dismissible">
+           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+           <h5><i class="icon fas fa-check"></i> Alert!</h5>
+           <div th:text="${success}"></div>
+       </div>
+
+       <div class="card card-primary">
+           <div class="card-header">
+               <h3 class="card-title">Add User</h3>
+           </div>
+           <!-- /.card-header -->
+           <!-- form start -->
+           <form method="POST" th:action="@{/admin/users/do-add}" th:object="${user}">
+               <div class="card-body">
+                   <div class="form-group">
+                       <label>Email address</label>
+                       <input type="email" th:field="*{email}" class="form-control"  placeholder="Enter email">
+                   </div>
+
+                   <div class="form-group">
+                       <label>Password</label>
+                       <input type="password" th:field="*{password}" class="form-control"  placeholder="Password">
+                   </div>
+
+                   <div class="form-group">
+                       <label>FullName</label>
+                       <input type="text" th:field="*{fullName}"  class="form-control"  placeholder="FullName">
+                   </div>
+
+                   <div class="form-group">
+                       <label>Role</label>
+                       <select th:field="*{role}" class="form-control">
+                           <option value="1">Client</option>
+                           <option value="2">Admin</option>
+                       </select>
+                   </div>
+               </div>
+               <!-- /.card-body -->
+
+               <div class="card-footer">
+                   <button type="submit" class="btn btn-primary">Submit</button>
+               </div>
+           </form>
+       </div>
+   </div>
+</body>
+</html>

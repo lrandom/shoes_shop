@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://thymeleaf.org"  xmlns:layout="http://https://ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div layout:fragment="content">
+   <div class="row">
+       <div class="card">
+           <div class="card-header">
+               <h3 class="card-title">Bordered Table</h3>
+           </div>
+           <!-- /.card-header -->
+           <div class="card-body">
+               <table class="table table-bordered">
+                   <thead>
+                   <tr>
+                       <th style="width: 10px">#</th>
+                       <th>Email</th>
+                       <th>Full Name</th>
+                       <th>Role</th>
+                       <th style="width: 40px">Thao tác</th>
+                   </tr>
+                   </thead>
+
+                   <tbody>
+                   
+                   <tr th:each="item:${listResult.getListUser()}">
+                       <td th:text="${item.getId()}"></td>
+                       <td th:text="${item.getEmail()}"></td>
+                       <td th:text="${item.getFullName()}"></td>
+                       <td>
+                           <div th:if="${item.role==2}">Admin</div>
+                           <div th:if="${item.role==1}">Client</div>
+                       </td>
+                       <td>
+
+                       </td>
+                   </tr>
+
+                   </tbody>
+               </table>
+           </div>
+           <!-- /.card-body -->
+           <div class="card-footer clearfix">
+               <ul class="pagination pagination-sm m-0 float-right">
+                   <li class="page-item"><a class="page-link" href="#">«</a></li>
+                   <li class="page-item"><a class="page-link" href="#">1</a></li>
+                   <li class="page-item"><a class="page-link" href="#">2</a></li>
+                   <li class="page-item"><a class="page-link" href="#">3</a></li>
+                   <li class="page-item"><a class="page-link" href="#">»</a></li>
+               </ul>
+           </div>
+       </div>
+   </div>
+</div>
+</div>
+</body>
+</html>
