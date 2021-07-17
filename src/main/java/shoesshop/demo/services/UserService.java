@@ -27,6 +27,19 @@ public class UserService {
         return true;
     }
 
+    public boolean delete(long id) {
+        try {
+            userJPA.deleteById(id);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    public User getUserById(long id) {
+        return userJPA.findById(id).get();
+    }
+
     public ListResult getUserList(int page) {
        ListResult listResult = new ListResult();
        listResult.setListUser(userJPA.findAll(PageRequest.of(page - 1, 10)));

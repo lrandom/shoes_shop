@@ -25,32 +25,22 @@ layout:decorate="~{admin/layout}"
 
        <div class="card card-primary">
            <div class="card-header">
-               <h3 class="card-title">Add User</h3>
+               <h3 class="card-title">Add Category</h3>
            </div>
            <!-- /.card-header -->
            <!-- form start -->
-           <form method="POST" th:action="@{/admin/users/do-add}" th:object="${user}">
+           <form method="POST" th:action="@{/admin/categories/do-add}" th:object="${categories}">
                <div class="card-body">
                    <div class="form-group">
-                       <label>Email address</label>
-                       <input type="email" th:field="*{email}" class="form-control"  placeholder="Enter email">
+                       <label>Name</label>
+                       <input type="text" th:field="*{name}" class="form-control"  placeholder="Enter name">
                    </div>
 
                    <div class="form-group">
-                       <label>Password</label>
-                       <input type="password" th:field="*{password}" class="form-control"  placeholder="Password">
-                   </div>
-
-                   <div class="form-group">
-                       <label>FullName</label>
-                       <input type="text" th:field="*{fullName}"  class="form-control"  placeholder="FullName">
-                   </div>
-
-                   <div class="form-group">
-                       <label>Role</label>
-                       <select th:field="*{role}" class="form-control">
-                           <option value="1">Client</option>
-                           <option value="2">Admin</option>
+                       <label>Status</label>
+                       <select th:field="*{status}" class="form-control">
+                           <option value="1">Active</option>
+                           <option value="0">Inactive</option>
                        </select>
                    </div>
                </div>
@@ -64,13 +54,13 @@ layout:decorate="~{admin/layout}"
    </div>
 
    <div layout:fragment="heading">
-       Users/Add
+       Categories/Add
    </div>
 
    <div layout:fragment="breadcrumb">
        <ol class="breadcrumb float-sm-right">
            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-           <li class="breadcrumb-item active"><a th:href="@{/admin/users/}">Users</a></li>
+           <li class="breadcrumb-item active"><a th:href="@{/admin/categories/}">Categories</a></li>
            <li class="breadcrumb-item active">Add</li>
        </ol>
    </div>

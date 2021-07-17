@@ -16,6 +16,9 @@ public class Categories {
     String name;
 
     @Column(name = "status")
-    String status;
+    Long status;
+
+
+
 
 }

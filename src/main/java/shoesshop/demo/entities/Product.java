@@ -3,6 +3,7 @@ package shoesshop.demo.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Locale;
 
 @Entity
 @Data
@@ -18,18 +19,21 @@ public class Product {
     @Column(name = "price")
     Double price;
 
-    @Column(name="description")
+    @Column(name = "description")
     String description;
 
     @Column(name = "quantity")
     Integer quantity;
 
-    @Column(name="discount")
+    @Column(name = "discount")
     Double discount;
 
-    @Column(name="status")
+    @Column(name = "status")
     Integer status;
 
-    @Column(name="picture")
+    @Column(name = "picture")
     String picture;
+
+    @Column(name = "category_id")
+    long categoryId;
 }
