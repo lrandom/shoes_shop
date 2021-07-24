@@ -217,7 +217,55 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <p>Add User</p>
                                 </a>
                             </li>
+                        </ul>
+                    </li>
 
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-edit"></i>
+                            <p>
+                                Category
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a th:href="@{/admin/categories/}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>List Category</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a th:href="@{/admin/categories/add}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Add Category</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-edit"></i>
+                            <p>
+                                Product
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a th:href="@{/admin/products/}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>List Product</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a th:href="@{/admin/products/add}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Add Product</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
 

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://https://ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{frontend/layout}"
+>
+
+<div layout:fragment="content">
+
+
+   <section>
+       <h4>Sản phẩm mới nhất</h4>
+       <div class="grid lg:grid-cols-3 grid-cols-1 gap-5">
+           
+           <div th:each="product:${lastProducts}" class="col-span-1 shadow-lg rounded space-y-2 p-2">
+               <figure>
+                   <img class="w-full h-26 object-cover"  th:src="'/uploads/'+@{${product.getPicture()}}"/>
+               </figure>
+               <h5 class="text-3xl font-bold" th:text="${product.getName()}"></h5>
+               <p class="font-bold text-xl" th:text="${product.getPrice()}"></p>
+           </div>
+       </div>
+   </section>
+
+    <section>
+        <h4>Sản phẩm bán chạy nhất</h4>
+        <div class="grid lg:grid-cols-4 grid-cols-1">
+
+        </div>
+    </section>
+
+    <section>
+        <h4>Có thể bạn sẽ thích</h4>
+        <div class="grid lg:grid-cols-4 grid-cols-1">
+
+        </div>
+    </section>
+</div>

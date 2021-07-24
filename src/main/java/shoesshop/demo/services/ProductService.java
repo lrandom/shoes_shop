@@ -49,6 +49,21 @@ public class ProductService {
         return productJPA.findById(id).get();
     }
 
+    public Iterable<Product> getLastProducts() {
+        return productJPA.getLastProducts();
+    }
+
+    public Iterable<Product> getTopSaleProducts() {
+        return productJPA.getSoleProducts();
+    }
+
+/*
+    public Iterable<Product> getSuggestProducts() {
+
+    }
+*/
+
+
     public ListResult getProductList(int page) {
         ListResult listResult = new ListResult();
         listResult.setListProduct(productJPA.findAll(PageRequest.of(page - 1, 10)));

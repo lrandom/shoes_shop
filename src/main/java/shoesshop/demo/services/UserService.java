@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import shoesshop.demo.entities.Product;
 import shoesshop.demo.entities.User;
 import shoesshop.demo.helpers.Helper;
 import shoesshop.demo.jpa.UserJPA;
@@ -39,6 +40,7 @@ public class UserService {
     public User getUserById(long id) {
         return userJPA.findById(id).get();
     }
+
 
     public ListResult getUserList(int page) {
        ListResult listResult = new ListResult();

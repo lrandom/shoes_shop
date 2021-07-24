@@ -1,6 +1,7 @@
 package shoesshop.demo.controllers.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import shoesshop.demo.entities.Categories;
 import shoesshop.demo.entities.Product;
 import shoesshop.demo.services.CategoryService;
 import shoesshop.demo.services.ProductService;
@@ -17,6 +17,8 @@ import shoesshop.demo.services.ProductService;
 @Controller
 @RequestMapping("/admin/products")
 public class ProductController implements IWithImageCRUD<Product> {
+
+
     @Autowired
     private ProductService productService;
 
@@ -56,6 +58,7 @@ public class ProductController implements IWithImageCRUD<Product> {
     }
 
     @Override
+    @RequestMapping("/")
     public String list(Model model, int page) {
         ProductService.ListResult listResult = productService.getProductList(page);
         model.addAttribute("listResult", listResult);

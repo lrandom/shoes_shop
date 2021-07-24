@@ -35,28 +35,39 @@
                         <thead>
                         <tr>
                             <th style="width: 10px">#</th>
+                            <th>Thumbnail</th>
                             <th>Name</th>
+                            <th>Price</th>
+                            <th>Category</th>
                             <th>Status</th>
+                            <th>Quantity</th>
                             <th>Thao tác</th>
                         </tr>
                         </thead>
 
                         <tbody>
 
-                        <tr th:each="item:${listResult.getListCategories()}">
+                        <tr th:each="item:${listResult.getListProduct()}">
                             <td th:text="${item.getId()}"></td>
-                            <td th:text="${item.getName()}"></td>
-                            <td>
+                            <th>
+                               <img height="100px" width="100px" th:src="'/uploads/'+@{${item.getPicture()}}"/>
+                            </th>
+                            <th th:text="${item.getName()}"></th>
+                            <th th:text="${item.getPrice()}"></th>
+                            <th th:text="${item.getCategory().getName()}"></th>
+                            <th>
                                 <div th:if="${item.getStatus==1}" class="badge badge-success">Active</div>
                                 <div th:if="${item.getStatus==0}" class="badge badge-danger">Inactive</div>
-                            </td>
+                            </th>
+                            <th th:text="${item.getQuantity()}"></th>
                             <td>
-                                <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete it ?')"
+                                <a class="btn btn-danger"
+                                   onclick="return confirm('Are you sure you want to delete it ?')"
                                    th:href="@{/admin/categories/delete(id=${item.getId()})}">Delete</a>
-                                <a class="btn btn-warning" th:href="@{/admin/categories/edit(id=${item.getId()})}">Edit</a>
+                                <a class="btn btn-warning"
+                                   th:href="@{/admin/categories/edit(id=${item.getId()})}">Edit</a>
                             </td>
                         </tr>
-
                         </tbody>
                     </table>
                 </div>
@@ -66,7 +77,8 @@
                     <ul class="pagination pagination-sm m-0 float-right">
                         <li th:each="pageNumber:${#numbers.sequence(1, listResult.getTotalPage())}"
                             th:attr="class=${listResult.getActivePage()==pageNumber ? 'active page-item' : 'page-item'}">
-                            <a class="page-link" th:href="@{/admin/categories(page=${pageNumber})}" th:text="${pageNumber}"></a>
+                            <a class="page-link" th:href="@{/admin/categories(page=${pageNumber})}"
+                               th:text="${pageNumber}"></a>
                         </li>
                     </ul>
                 </div>
