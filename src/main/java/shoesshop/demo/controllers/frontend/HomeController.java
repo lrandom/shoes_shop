@@ -16,8 +16,10 @@ public class HomeController {
     public String getHome(Model model) {
         Iterable<Product> lastProducts = productService.getLastProducts();
         Iterable<Product> topSaleProducts  = productService.getTopSaleProducts();
+        Iterable<Product> suggestProducts  = productService.getSuggestProducts();
         model.addAttribute("lastProducts", lastProducts);
         model.addAttribute("topSaleProducts", topSaleProducts);
+        model.addAttribute("suggestProducts", suggestProducts);
         return "frontend/home";
     }
 }

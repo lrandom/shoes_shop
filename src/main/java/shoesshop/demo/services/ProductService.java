@@ -57,6 +57,14 @@ public class ProductService {
         return productJPA.getSoleProducts();
     }
 
+    public Iterable<Product> getSuggestProducts() {
+        return productJPA.getSuggestProducts();
+    }
+
+    public Product getProduct(long id) {
+        return productJPA.findById(id).get();
+    }
+
 /*
     public Iterable<Product> getSuggestProducts() {
 

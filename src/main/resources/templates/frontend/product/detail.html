@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://https://ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{frontend/layout}"
+>
+
+<div layout:fragment="content">
+    <div class="mx-auto px-36 space-y-10">
+        <div class="flex space-x-5 mt-24">
+            <div class="lg:w-2/6 w-full">
+                <figure>
+                    <img style="height:20rem" class="w-full object-cover"
+                         th:src="'/uploads/'+@{${product.getPicture()}}"/>
+                </figure>
+            </div>
+
+            <div class="lg:w-4/6 w-full">
+                <h5 class="text-2xl font-bold" th:text="${product.getName()}"></h5>
+                <div class="text-red-500 font-bold text-xl" th:text="${product.getPrice()}"></div>
+                <div class="flex">
+                    <input th:data-id="${product.getId()}" type="number" name="quantity" value="1" class="border-2 border-indigo-500"/>
+                    <button onclick="addToCart()" class="bg-blue-500 text-white">Add To Cart</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div th:text="${product.description}">
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function addToCart(){
+            const quantity = $('input[name="quantity"]').val();//láy dữ liệu từ input number
+            if(quantity>=1){
+                //gửi dữ liệu lên server
+                $.ajax({
+                    url:"/product/add-to-cart",
+                    dataType: 'json',
+                    method: 'post',
+                    data:{
+                        id: $('input[name="quantity"]').attr('data-id'),
+                        quantity: quantity
+                    },
+                    success: function (resp) {
+                       const totalCartItems =  resp.total_cart_items;
+                        $('.total-cart-items').text(totalCartItems);
+                    },
+                    error: function (err) {
+                        console.log(err)
+                    }
+                })
+            }
+        }
+    </script>
+</div>

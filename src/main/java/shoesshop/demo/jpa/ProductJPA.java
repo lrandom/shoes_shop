@@ -12,4 +12,8 @@ public interface ProductJPA extends PagingAndSortingRepository<Product,Long> {
     @Query(nativeQuery = true,
             value = "select * from products where status=1  order by sole_quantity desc limit 10")
     public Iterable<Product> getSoleProducts();
+
+    @Query(nativeQuery = true,
+            value = "select * from products where status=1 AND is_suggest=1  order by id desc limit 10")
+    public Iterable<Product> getSuggestProducts();
 }

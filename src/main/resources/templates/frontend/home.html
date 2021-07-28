@@ -5,33 +5,49 @@
 >
 
 <div layout:fragment="content">
+    <div class="mx-auto px-36 space-y-10">
+        <section class="space-y-5">
+            <h4 class="font-bold text-2xl">Sản phẩm mới nhất</h4>
+            <div class="grid lg:grid-cols-3 grid-cols-1 gap-5">
+                <a th:each="product:${lastProducts}" class="col-span-1 shadow-lg rounded space-y-2 p-2" th:href="@{/product/detail(id=${product.getId()})}">
+                    <figure>
+                        <img style="height:20rem" class="w-full object-cover"
+                             th:src="'/uploads/'+@{${product.getPicture()}}"/>
+                    </figure>
 
+                    <h5 class="text-3xl font-bold" th:text="${product.getName()}"></h5>
+                    <p class="font-bold text-xl" th:text="${product.getPrice()}"></p>
+                </a>
+            </div>
+        </section>
 
-   <section>
-       <h4>Sản phẩm mới nhất</h4>
-       <div class="grid lg:grid-cols-3 grid-cols-1 gap-5">
-           
-           <div th:each="product:${lastProducts}" class="col-span-1 shadow-lg rounded space-y-2 p-2">
-               <figure>
-                   <img class="w-full h-26 object-cover"  th:src="'/uploads/'+@{${product.getPicture()}}"/>
-               </figure>
-               <h5 class="text-3xl font-bold" th:text="${product.getName()}"></h5>
-               <p class="font-bold text-xl" th:text="${product.getPrice()}"></p>
-           </div>
-       </div>
-   </section>
+        <section class="space-y-5">
+            <h4 class="font-bold text-2xl">Sản phẩm bán chạy nhất</h4>
+            <div class="grid lg:grid-cols-3 grid-cols-1 gap-5">
+                <a th:each="product:${topSaleProducts}" class="col-span-1 shadow-lg rounded space-y-2 p-2"  th:href="@{/product/detail(id=${product.getId()})}">
+                    <figure>
+                        <img style="height:20rem" class="w-full object-cover"
+                             th:src="'/uploads/'+@{${product.getPicture()}}"/>
+                    </figure>
+                    <h5 class="text-3xl font-bold" th:text="${product.getName()}"></h5>
+                    <p class="font-bold text-xl" th:text="${product.getPrice()}"></p>
+                </a>
+            </div>
+        </section>
 
-    <section>
-        <h4>Sản phẩm bán chạy nhất</h4>
-        <div class="grid lg:grid-cols-4 grid-cols-1">
+        <section class="space-y-5">
+            <h4 class="font-bold text-2xl">Có thể bạn sẽ thích</h4>
+            <div class="grid lg:grid-cols-3 grid-cols-1 gap-5">
+            <a th:each="product:${suggestProducts}" class="col-span-1 shadow-lg rounded space-y-2 p-2"  th:href="@{/product/detail(id=${product.getId()})}">
+                    <figure>
+                        <img style="height:20rem" class="w-full object-cover"
+                             th:src="'/uploads/'+@{${product.getPicture()}}"/>
+                    </figure>
+                    <h5 class="text-3xl font-bold" th:text="${product.getName()}"></h5>
+                    <p class="font-bold text-xl" th:text="${product.getPrice()}"></p>
+                </a>
+            </div>
+        </section>
+    </div>
 
-        </div>
-    </section>
-
-    <section>
-        <h4>Có thể bạn sẽ thích</h4>
-        <div class="grid lg:grid-cols-4 grid-cols-1">
-
-        </div>
-    </section>
 </div>

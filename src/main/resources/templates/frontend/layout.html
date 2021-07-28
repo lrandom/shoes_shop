@@ -7,15 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Bán giày cắt lỗ, lỗ vẫn bán</title>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-<div class="container mx-auto">
-    <nav class="flex">
-        <div>
+<div>
+    <nav class="flex items-center justify-between shadow p-2 w-full">
+        <a>
             <!--LOGO-->
-        </div>
+            <svg class="pre-logo-svg" height="60px" width="60px" fill="#111" viewBox="0 0 69 32">
+                <path d="M68.56 4L18.4 25.36Q12.16 28 7.92 28q-4.8 0-6.96-3.36-1.36-2.16-.8-5.48t2.96-7.08q2-3.04 6.56-8-1.6 2.56-2.24 5.28-1.2 5.12 2.16 7.52Q11.2 18 14 18q2.24 0 5.04-.72z"></path>
+            </svg>
+        </a>
 
-        <div class="flex items-center justify-center space-x-2">
+        <div class="flex items-center space-x-5 font-bold uppercase">
+
             <div>
                 <a href="">Home</a>
             </div>
@@ -35,6 +40,16 @@
             <div>
                 <a href="">Đăng ký</a>
             </div>
+
+            <div class="relative">
+                <svg width="42" height="41" viewBox="0 0 42 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M40.5117 37.875C40.5117 39.3305 39.3305 40.5117 37.875 40.5117C36.4195 40.5117 35.2383 39.3305 35.2383 37.875C35.2383 36.4195 36.4195 35.2383 37.875 35.2383C39.3305 35.2383 40.5117 36.4195 40.5117 37.875Z" fill="black"/>
+                    <path d="M10.1367 37.875C10.1367 39.3305 8.95547 40.5117 7.5 40.5117C6.04453 40.5117 4.86328 39.3305 4.86328 37.875C4.86328 36.4195 6.04453 35.2383 7.5 35.2383C8.95547 35.2383 10.1367 36.4195 10.1367 37.875Z" fill="black"/>
+                    <path d="M7.48945 4.125L6.31875 0.75H0.75V2.54297H5.14805L11.2125 25.0395C7.79531 26.2312 4.89492 29.0367 4.32539 32.7492C4.125 33.9832 4.125 34.5 4.125 34.5H41.25V32.7387H6.16055C6.65625 29.4059 10.2527 26.6109 13.9758 26.1469C17.6988 25.6828 39.6363 22.5398 39.6363 22.5398L41.25 4.125H7.48945ZM37.875 21L13.0898 24.5121C12.9949 24.5332 12.9 24.5543 12.8051 24.5754L8.09063 5.87578H39.4887L37.875 21Z" fill="black"/>
+                </svg>
+
+                <div class="absolute p-1 -top-3 right-0  bg-white font-medium total-cart-items">0</div>
+            </div>
         </div>
     </nav>
 
@@ -45,6 +60,23 @@
     <footer class="text-center w-full bg-white">
         Copyright 2021 Nguyen Thanh Luan
     </footer>
+    <script type="text/javascript">
+
+                //gửi dữ liệu lên server
+                $.ajax({
+                    url:"/product/get-total-cart-items",
+                    dataType: 'json',
+                    method: 'get',
+                    success: function (resp) {
+                        const totalCartItems =  resp.total_cart_items;
+                        $('.total-cart-items').text(totalCartItems);
+                    },
+                    error: function (err) {
+                        console.log(err)
+                    }
+                })
+
+    </script>
 </div>
 </body>
 </html>
