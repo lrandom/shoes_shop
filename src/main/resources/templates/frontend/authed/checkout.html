@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://https://ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{frontend/layout}"
+>
+
+<div layout:fragment="content" class="h-screen">
+    <div class="mx-auto px-36 space-y-10">
+        <h4 class="font-bold text-center w-full">Giỏ hảng</h4>
+        <div class="w-full">
+            <table class="w-full table-auto">
+                <thead>
+                <tr>
+                    <td>Name</td>
+                    <td>Quantity</td>
+                    <td>Price</td>
+                    <td>Total</td>
+                </tr>
+                </thead>
+
+                <tbody class="cart-item-wrapper">
+
+                </tbody>
+            </table>
+
+            <form method="post" th:action="@{/do-checkout}">
+                <input type="hidden" name="total" th:value="${total}"/>
+                <div class="mt-10 float-right">
+                    <div>
+                        Sub Total: <span class="sub-total" th:text="${subTotal}"></span>
+                    </div>
+
+                    <div>
+                        Tax(10%): <span class="tax" th:text="${tax}"></span>
+                    </div>
+
+                    <div>
+                        Total:<span class="super-total" th:text="${total}"></span>
+                    </div>
+                </div>
+
+                <div>
+                    <div>Địa chỉ nhận hàng</div>
+                    <textarea name="ship_address" class="border-2"></textarea>
+                </div>
+
+                <div class="w-full">
+                    <button class="bg-blue-500 rounded block">Checkout</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>

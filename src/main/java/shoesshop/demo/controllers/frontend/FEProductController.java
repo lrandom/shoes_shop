@@ -1,6 +1,7 @@
 package shoesshop.demo.controllers.frontend;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -85,4 +86,45 @@ public class FEProductController {
 
         return "{\"total_cart_items\":" + cartItems.size() + "}";
     }
+
+    @GetMapping("/product/get-cart")
+    public ResponseEntity<?> getCart(HttpSession session) {
+        if (session.getAttribute("CART") == null) {
+            return ResponseEntity.ok(new ArrayList<CartItem>());
+        }
+        ArrayList<CartItem> cartItems = (ArrayList<CartItem>) session.getAttribute("CART");
+        return ResponseEntity.ok(cartItems);
+    }
+
+    @PostMapping("/product/change-quantity")
+    public ResponseEntity<?> getCart(HttpSession session,
+                                     @RequestParam(name = "step") int step,
+                                     @RequestParam(name = "id") long id
+                                     ) {
+        ArrayList<CartItem> cartItems = (ArrayList<CartItem>) session.getAttribute("CART");
+        for (int i = 0; i < cartItems.size(); i++) {
+            if(cartItems.get(i).getId()==id){
+                cartItems.get(i).setQuantity(cartItems.get(i).getQuantity()+step);
+            }
+        }
+        session.setAttribute("CART", cartItems);
+        return ResponseEntity.ok(cartItems);
+    }
+
+
+    @PostMapping("/product/delete-item")
+    public ResponseEntity<?> getCart(HttpSession session,
+                                     @RequestParam(name = "id") long id
+    ) {
+        ArrayList<CartItem> cartItems = (ArrayList<CartItem>) session.getAttribute("CART");
+        ArrayList<CartItem> tmpCartItems = new ArrayList<>();
+        for (int i = 0; i < cartItems.size(); i++) {
+            if(cartItems.get(i).getId()!=id){
+                tmpCartItems.add(cartItems.get(i));
+            }
+        }
+        session.setAttribute("CART", tmpCartItems);
+        return ResponseEntity.ok(tmpCartItems);
+    }
+
 }

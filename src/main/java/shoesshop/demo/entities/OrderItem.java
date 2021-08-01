@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @Table(name = "order_items")
-public class OrderItems {
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -21,4 +21,11 @@ public class OrderItems {
 
     @Column(name = "price")
     Double price;
+
+    @Column(name = "order_id")
+    Long orderId;
+
+    @Column(name = "product_id")
+    Long productid;
+
 }

@@ -18,6 +18,9 @@ public class Order {
     @Column(name = "order_date")
     String orderDate;
 
-    @Column(name="received_address")
+    @Column(name = "received_address")
     String receivedAddress;
+
+    @Column(name = "user_id")
+    Long userId;
 }

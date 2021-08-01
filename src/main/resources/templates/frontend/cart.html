@@ -1,10 +1,121 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!doctype html>
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://https://ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{frontend/layout}"
+>
 
-</body>
-</html>
+<div layout:fragment="content" class="h-screen">
+    <div class="mx-auto px-36 space-y-10">
+        <h4 class="font-bold text-center w-full">Giỏ hảng</h4>
+        <div class="w-full">
+            <table class="w-full table-auto">
+                <thead>
+                <tr>
+                    <td>Name</td>
+                    <td>Quantity</td>
+                    <td>Price</td>
+                    <td>Total</td>
+                    <td>Action</td>
+                </tr>
+                </thead>
+
+                <tbody class="cart-item-wrapper">
+
+                </tbody>
+            </table>
+            <div class="mt-10 float-right">
+                <div>
+                    Sub Total: <span class="sub-total">-</span>
+                </div>
+
+                <div>
+                    Tax(10%): <span class="tax">-</span>
+                </div>
+
+                <div>
+                    Total:<span class="super-total">-</span>
+                </div>
+            </div>
+
+            <div class="w-full">
+                <a class="bg-blue-500 rounded block" th:href="@{/checkout}">Checkout</a>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function renderItemUI(item) {
+            $('.cart-item-wrapper').append(`<tr data-id="${item.id}"><td class="name">${item.name}</td>
+                <td class="quantity"><span onclick="changeQuantity(1, ${item.id})">+</span><span class="inner-quantity">${item.quantity}</span><span onclick="changeQuantity(-1,${item.id})">-</span></td>
+                <td class="price">${item.price}</td>
+                <td class="total">${item.price * item.quantity}</td><td><span onclick="deleteItem(${item.id})">Delete</span></td></tr>`)
+        }
+
+
+        function renderUI(resp) {
+            let subTotal = 0;
+            let total = 0;
+            let tax = 0;
+            for (let i = 0; i < resp.length; i++) {
+                const item = resp[i];
+                renderItemUI(item);
+                subTotal += (item.quantity * item.price);
+            }
+            tax = (10 / 100) * subTotal;
+            total = tax + subTotal;
+
+            $('.sub-total').html(subTotal);
+            $('.tax').html(tax);
+            $('.super-total').html(total);
+        }
+
+        function loadCart() {
+            //gửi dữ liệu lên server
+            $.ajax({
+                url: "/product/get-cart",
+                dataType: 'json',
+                method: 'get',
+                success: function (resp) {
+                    renderUI(resp);
+                },
+                error: function (err) {
+                    console.log(err)
+                }
+            })
+        }//end load cart
+        loadCart();
+
+        function changeQuantity(step, id) {
+            $.ajax({
+                url: "/product/change-quantity",
+                dataType: 'json',
+                method: 'post',
+                data: {step: step, id: id},
+                success: function (resp) {
+                    //xử lý giao diện ở đoạn này
+                    let quantity = parseInt($(`tr[data-id="${id}"] .quantity .inner-quantity`).text());
+                    quantity += step;
+                    console.log(quantity);
+                    $(`tr[data-id="${id}"] .quantity .inner-quantity`).html(quantity);
+
+                    let price = parseFloat($(`tr[data-id="${id}"] .price`).text());
+                    price *= quantity;
+                    $(`tr[data-id="${id}"] .total`).html(price);
+                }
+            })
+        }
+
+        function deleteItem(id) {
+            $.ajax({
+                url: "/product/delete-item",
+                dataType: 'json',
+                method: 'post',
+                data: {id: id},
+                success: function (resp) {
+                    $('.cart-item-wrapper').html('');
+                    renderUI(resp);
+                }
+            })
+        }
+    </script>
+</div>
