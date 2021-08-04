@@ -1,10 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!doctype html>
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://https://ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{frontend/layout}"
+>
 
-</body>
-</html>
+<div layout:fragment="content">
+    <div class="w-1/3 shadow bg-white rounded mx-auto">
+        <h4>Login</h4>
+        <div th:if="${failed!=null}" class="bg-red-500 block text-white w-full">
+            <div th:text="${failed}"></div>
+        </div>
+        <form class="flex space-y-4 flex-col justify-center" method="POST" th:action="@{/do-login}">
+            <input type="email" name="email" placeholder="email"/>
+            <input type="password" name="password" placeholder="password"/>
+            <button class="w-1/3 block text-white bg-blue-500">Login</button>
+        </form>
+        <p>Bạn chưa có tài khoản ? <a th:href="@{/login}">Đăng ký</a></p>
+    </div>
+</div>

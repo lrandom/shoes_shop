@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import shoesshop.demo.entities.CartItem;
 import shoesshop.demo.entities.Product;
+import shoesshop.demo.entities.User;
 import shoesshop.demo.services.OrderService;
 import shoesshop.demo.services.ProductService;
 
@@ -56,16 +57,19 @@ public class HomeController {
     public String doCheckout(HttpSession httpSession, @RequestParam("ship_address") String shipAddress,
                              @RequestParam("total")Double total) {
         //CHƯA ĐĂNG NHẬP
-      /*  if (httpSession.getAttribute("USER") == null) {
+        if (httpSession.getAttribute("USER") == null) {
             httpSession.setAttribute("REDIRECT_BACK", "/checkout");
             return "redirect:/login";
-        }*/
+        }
 
 
+        User user = (User) httpSession.getAttribute("USER");
         //ĐÃ ĐĂNG NHẬP
         //TẠO ĐƠN HÀNG
         ArrayList<CartItem> cartItems = (ArrayList<CartItem>) httpSession.getAttribute("CART");
-        orderService.makeOrder(shipAddress,1,total,cartItems);
+        orderService.makeOrder(shipAddress,user.getId(),total,cartItems);
+        httpSession.removeAttribute("CART");
+
         return "redirect:/checkout-success";
     }
 

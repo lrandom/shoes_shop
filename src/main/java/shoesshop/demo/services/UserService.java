@@ -28,6 +28,8 @@ public class UserService {
         return true;
     }
 
+
+
     public boolean delete(long id) {
         try {
             userJPA.deleteById(id);
@@ -35,6 +37,11 @@ public class UserService {
             return false;
         }
         return true;
+    }
+
+    public User login(String email, String password) {
+        return this.userJPA.login(email, helper.getMD5(password)).isPresent() ?
+                this.userJPA.login(email, helper.getMD5(password)).get(): null;
     }
 
     public User getUserById(long id) {
