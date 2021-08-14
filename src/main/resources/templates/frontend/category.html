@@ -1,10 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!doctype html>
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://https://ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{frontend/layout}"
+>
 
-</body>
-</html>
+<div layout:fragment="content">
+    <div class="mx-auto px-36 grid grid-cols-6 mt-10">
+        <div class="lg:col-span-2 col-span-6">
+            <ul class="mx-0 px-0">
+                <li>
+                    <a th:href="@{/category}"  th:attr="class=${categoryId==0 ? 'text-blue-500' : ''}">Tất cả</a>
+                </li>
+
+                <li th:each="item:${category}"  th:attr="class=${item.getId()==categoryId ? 'text-blue-500' : ''}">
+                    <a th:href="@{/category(id=${item.getId()})}" th:text="${item.getName()}"></a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="lg:col-span-4 col-span-6">
+            <section class="space-y-5">
+                <h4 class="font-bold text-2xl" th:text="${categoryName}"></h4>
+                <div class="grid lg:grid-cols-3 grid-cols-1 gap-5">
+                    <a th:each="product:${listResult.getListProduct()}"
+                       class="col-span-1 shadow-lg rounded space-y-2 p-2"
+                       th:href="@{/product/detail(id=${product.getId()})}">
+                        <figure>
+                            <img style="height:20rem" class="w-full object-cover"
+                                 th:src="'/uploads/'+@{${product.getPicture()}}"/>
+                        </figure>
+                        <h5 class="text-3xl font-bold" th:text="${product.getName()}"></h5>
+                        <p class="font-bold text-xl" th:text="${product.getPrice()}"></p>
+                    </a>
+                </div>
+
+
+                <ul class="flex space-x-2 ">
+                    <li th:each="pageNumber:${#numbers.sequence(1, listResult.getTotalPage())}"
+                        th:attr="class=${listResult.getActivePage()==pageNumber ? 'active page-item' : 'page-item'}">
+                        <a class="p-2 flex justify-center items-center border-2 rounded bg-white"
+                           th:href="@{/category(page=${pageNumber},id=${categoryId})}" th:text="${pageNumber}"></a>
+                    </li>
+                </ul>
+            </section>
+        </div>
+
+    </div>
+
+</div>

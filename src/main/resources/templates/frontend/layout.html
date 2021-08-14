@@ -19,6 +19,16 @@
             </svg>
         </a>
 
+        <div class="relative">
+            <form th:action="@{/search}" onsubmit="return validate()">
+                <input type="text" placeholder="Search" name="query" class="border-2 rounded p-2 w-25"
+                       onkeyup="searching()"/>
+                <ul class="bg-white z-30 suggest absolute p-2 top-10 left-0 right-0">
+
+                </ul>
+            </form>
+        </div>
+
         <div class="flex items-center space-x-5 font-bold uppercase">
 
             <div>
@@ -26,7 +36,7 @@
             </div>
 
             <div>
-                <a href="">Danh mục sản phẩm</a>
+                <a th:href="@{/category}">Danh mục sản phẩm</a>
             </div>
 
             <div>
@@ -34,14 +44,14 @@
             </div>
 
             <div th:unless="${session.USER}">
-                <a  th:href="@{/login}">Đăng nhập </a>
+                <a th:href="@{/login}">Đăng nhập </a>
             </div>
 
             <div th:unless="${session.USER}">
-                <a  th:href="@{/signup}">Đăng ký</a>
+                <a th:href="@{/signup}">Đăng ký</a>
             </div>
 
-            <div th:if="${session.USER}" >
+            <div th:if="${session.USER}">
                 <span>Xin chào <span th:text="${session.USER.getEmail()}"></span></span>
                 <a th:href="@{/logout}">Đăng xuất</a>
             </div>
@@ -83,6 +93,35 @@
                 console.log(err)
             }
         })
+
+        function validate() {
+            if (!$('input[name="query"]').val()) {
+                return false;
+            }
+        };
+
+        function searching() {
+            const query = $('input[name="query"]').val();
+            $.ajax({
+                url: "/searching?query=" + query,
+                dataType: 'json',
+                method: 'get',
+                success: function (resp) {
+                    let products = resp;
+                    console.log(products);
+                    $('.suggest').html('');
+                    for (let i = 0; i < products.length; i++) {
+                        const product = products[i]
+                        $('.suggest').append(
+                            `<li class="relative"><a class="p-10 flex justify-start" target="_blank" href="/product/detail?id=${product[0]}"><img src="/uploads/${product[2]}" class="w-10 h-10"/>${product[1]}</a></li>`
+                        );
+                    }
+                },
+                error: function (err) {
+                    console.log(err)
+                }
+            })
+        }
     </script>
 </div>
 </body>

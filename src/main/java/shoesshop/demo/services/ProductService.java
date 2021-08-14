@@ -15,17 +15,17 @@ public class ProductService {
     private ProductJPA productJPA;
 
     @Autowired
-    private  UploadService uploadService;
+    private UploadService uploadService;
 
     public boolean save(Product product, MultipartFile uploadImage) {
         try {
             //upload ảnh
-            if(uploadImage!=null){
+            if (uploadImage != null) {
                 //tiến hành upload
-               String uploadPath =  uploadService.upload(uploadImage);
+                String uploadPath = uploadService.upload(uploadImage);
                 if (uploadPath != null) {
                     product.setPicture(uploadPath);
-                }else{
+                } else {
                     return false;
                 }
             }
@@ -71,10 +71,31 @@ public class ProductService {
     }
 */
 
+    public Iterable<Product> searching(String query) {
+        return productJPA.searching(query);
+    }
+
+    public ListResult getProductsByCategoryId(long categoryId, int page) {
+        ListResult listResult = new ListResult();
+        listResult.setListProduct(productJPA.getProductsByCategoryId(categoryId, PageRequest.of(page - 1, 10)));
+        listResult.setActivePage(page);
+        double totalPage = Math.ceil((double) productJPA.count() / 10);
+        listResult.setTotalPage(totalPage);
+        return listResult;
+    }
 
     public ListResult getProductList(int page) {
         ListResult listResult = new ListResult();
         listResult.setListProduct(productJPA.findAll(PageRequest.of(page - 1, 10)));
+        listResult.setActivePage(page);
+        double totalPage = Math.ceil((double) productJPA.count() / 10);
+        listResult.setTotalPage(totalPage);
+        return listResult;
+    }
+
+    public ListResult searchProduct(String query,int page) {
+        ListResult listResult = new ListResult();
+        listResult.setListProduct(productJPA.searchProducts(query,PageRequest.of(page - 1, 10)));
         listResult.setActivePage(page);
         double totalPage = Math.ceil((double) productJPA.count() / 10);
         listResult.setTotalPage(totalPage);
@@ -86,5 +107,7 @@ public class ProductService {
         Iterable<Product> listProduct;
         int activePage;
         double totalPage;
+
     }
+
 }
