@@ -2,12 +2,15 @@ package shoesshop.demo.controllers.frontend;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import shoesshop.demo.entities.Order;
 import shoesshop.demo.entities.User;
+import shoesshop.demo.jpa.OrderJPA;
+import shoesshop.demo.services.OrderService;
 import shoesshop.demo.services.UserService;
 
 import javax.servlet.http.HttpSession;
@@ -17,9 +20,12 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private OrderService orderService;
+
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-        if (session.getAttribute("USER")!=null) {
+        if (session.getAttribute("USER") != null) {
             session.removeAttribute("USER");
         }
         return "redirect:/";
@@ -35,18 +41,18 @@ public class AuthController {
     }
 
     @PostMapping("/do-login")
-    public String doLogin(RedirectAttributes flashSession,HttpSession httpSession ,@RequestParam(name = "email") String email,
+    public String doLogin(RedirectAttributes flashSession, HttpSession httpSession, @RequestParam(name = "email") String email,
                           @RequestParam(name = "password") String password) {
 
         User user = this.userService.login(email, password);
         if (user != null) {
             httpSession.setAttribute("USER", user);
-            if(httpSession.getAttribute("REDIRECT_BACK")!=null){
-                String redirectBack = (String)httpSession.getAttribute("REDIRECT_BACK");
+            if (httpSession.getAttribute("REDIRECT_BACK") != null) {
+                String redirectBack = (String) httpSession.getAttribute("REDIRECT_BACK");
                 httpSession.removeAttribute("REDIRECT_BACK");
                 return "redirect:" + redirectBack;
             }
-        }else{
+        } else {
             flashSession.addFlashAttribute("failed", "Đăng nhập thất bại");
             return "redirect:/login";
         }
@@ -74,5 +80,34 @@ public class AuthController {
     @GetMapping("/signup")
     public String signup() {
         return "frontend/signup";
+    }
+
+
+    @GetMapping("/profile")
+    public String profile() {
+        return "frontend/authed/profile";
+    }
+
+    @GetMapping("/my-orders")
+    public String myOrder(HttpSession session,
+                          Model model,
+                          @RequestParam(name = "page", defaultValue = "1") int page) {
+        User user = (User) session.getAttribute("USER");
+        if (user != null) {
+            //lấy thông tin user
+            OrderService.ListResult listResult = orderService.getOrdersListByUserId(user.getId(), page);
+            model.addAttribute("listResult", listResult);
+        } else {
+            return "redirect:/login";
+        }
+        return "frontend/authed/my-orders";
+    }
+
+
+    @GetMapping("/order-detail")
+    public String orderDetail(@RequestParam(name="id") int id, Model model) {
+        Order order = orderService.findById(id);
+        model.addAttribute("order", order);
+        return "frontend/authed/order-detail";
     }
 }

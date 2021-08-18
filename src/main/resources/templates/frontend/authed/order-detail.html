@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://https://ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{frontend/layout}"
+>
+
+<div layout:fragment="content">
+    <div class="mx-auto px-36 space-y-10">
+        <div class="bg-white mx-auto mt-10">
+            <div th:each="item: ${order.getOrderItems()}">
+                <div class="flex">
+                    <span th:text="${item.getName()}"></span>
+
+                    <span>
+                     <span th:text="${item.getPrice()}"></span>
+                     x<span th:text="${item.getQuantity()}"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

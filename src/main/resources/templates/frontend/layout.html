@@ -52,7 +52,7 @@
             </div>
 
             <div th:if="${session.USER}">
-                <span>Xin chào <span th:text="${session.USER.getEmail()}"></span></span>
+                <span>Xin chào <a th:href="@{/profile}"><span th:text="${session.USER.getEmail()}"></span></a></span>
                 <a th:href="@{/logout}">Đăng xuất</a>
             </div>
 

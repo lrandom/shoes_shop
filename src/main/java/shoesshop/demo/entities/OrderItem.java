@@ -28,4 +28,7 @@ public class OrderItem {
     @Column(name = "product_id")
     Long productid;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "order_id", insertable = false,updatable = false)
+    public Order order;
 }

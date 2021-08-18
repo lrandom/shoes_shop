@@ -1,10 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!doctype html>
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://https://ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{frontend/layout}">
+<div layout:fragment="content">
+    <div class="mx-auto px-36 space-y-10">
+        <div class="grid grid-cols-9">
+            <div class="col-span-4">
+                <ul>
+                    <li>
+                        <a th:href="@{/profile}">
+                            Profile
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/update-password}">
+                            Update password
+                        </a>
+                    </li>
 
-</body>
-</html>
+                    <li>
+                        <a th:href="@{/orders}">
+                            Orders
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-span-6">
+                <table class="table-auto" style="width:100%">
+                    <tr>
+                        <td>
+                            Mã đơn
+                        </td>
+
+                        <td>
+                            Total
+                        </td>
+
+                        <td>
+                            Order Date
+                        </td>
+
+                        <td>
+                            Address
+                        </td>
+
+                        <td>
+                            Status
+                        </td>
+                    </tr>
+
+
+                    <tr th:each="item:${listResult.getListOrder()}">
+                        <td>
+                           <a th:text="${'#'+item.getId()}" th:href="@{/order-detail(id=${item.getId})}"></a>
+                        </td>
+                        <td th:text="${item.getTotal()}"></td>
+                        <td th:text="${item.getOrderDate()}"></td>
+                        <td th:text="${item.getReceivedAddress()}"></td>
+                        <td>
+                            <div th:if="${item.getStatus==1}" class="bg-yellow-500">Pending</div>
+                            <div th:if="${item.getStatus==2}" class="bg-green-500">Sent</div>
+                            <div th:if="${item.getStatus==3}" class="bg-green-500">Received</div>
+                            <div th:if="${item.getStatus==4}" class="bg-red-500">Cancel</div>
+                        </td>
+
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

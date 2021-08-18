@@ -107,7 +107,6 @@ public class ProductService {
         Iterable<Product> listProduct;
         int activePage;
         double totalPage;
-
     }
 
 }

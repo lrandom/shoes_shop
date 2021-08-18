@@ -1,10 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!doctype html>
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://https://ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{frontend/layout}">
+<div layout:fragment="content">
+    <div class="mx-auto px-36 space-y-10">
+       <div class="grid grid-cols-9">
+           <div class="col-span-4">
+                <ul>
+                    <li>
+                        <a th:href="@{/profile}">
+                            Profile
+                        </a>
+                      </li>
+                    <li>
+                        <a th:href="@{/update-password}">
+                            Update password
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a th:href="@{/orders}">
+                            Orders
+                        </a>
+                    </li>
+                </ul>
+           </div>
 
-</body>
-</html>
+           <div class="col-span-6">
+               <form th:action="@{/do-update}">
+                   <div>
+                       <input type="email" name="email"/>
+                   </div>
+                   <div>
+                       <input type="fullname" name="fullname"/>
+                   </div>
+                   <div>
+                       <button>Submit</button>
+                   </div>
+               </form>
+           </div>
+       </div>
+    </div>
+</div>
